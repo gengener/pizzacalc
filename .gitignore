@@ -1,0 +1,27 @@
+node_modules/
+dist/
+.env
+.env.*
+
+# Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Operating systems
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Archives and local working data
+*.zip
+pizza-backup.zip
+pizza backup.zip
+incoming/
+history-work/
+analysis/
+analysis-work/
+tmp/
+temp/
+.cache/
