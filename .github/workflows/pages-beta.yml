@@ -1,0 +1,46 @@
+name: Deploy PizzaCalc beta
+on:
+  push:
+    branches: [feature/practice-beta-v0]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}beta/
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: beta-source
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          path: public
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: beta-source/package-lock.json
+      - run: npm ci
+        working-directory: beta-source
+      - run: npm run check
+        working-directory: beta-source
+      - name: Assemble root and beta
+        run: |
+          mkdir -p public/beta
+          cp -R beta-source/dist/. public/beta/
+          rm -rf public/.git public/.github
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+      - id: deployment
+        uses: actions/deploy-pages@v4
