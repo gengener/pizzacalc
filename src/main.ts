@@ -13,7 +13,7 @@ type Lang = 'de' | 'en' | 'it';
 type Theme = 'system' | 'light' | 'dark';
 type Route = 'calculator' | 'info' | 'version' | 'imprint' | 'privacy';
 
-const version = '0.1.0-beta.7';
+const version = '0.1.0-beta.8';
 
 const copy = {
   de: {
@@ -184,7 +184,7 @@ function iconSvg(name: 'back' | 'up' | 'down') {
 function menuView() {
   const t = copy[lang];
   const u = ui[lang];
-  const flags = (['de', 'en', 'it'] as Lang[]).map((value) => `<button type="button" data-lang="${value}" aria-label="${value === 'de' ? 'Deutsch' : value === 'it' ? 'Italiano' : 'English'}" aria-pressed="${lang === value}">${flagSvg(value)}</button>`).join('');
+  const flags = (['it', 'de', 'en'] as Lang[]).map((value) => `<button type="button" data-lang="${value}" aria-label="${value === 'de' ? 'Deutsch' : value === 'it' ? 'Italiano' : 'English'}" aria-pressed="${lang === value}">${flagSvg(value)}</button>`).join('');
   return `<details class="menu"><summary aria-label="${t.menu}"><span class="hamburger" aria-hidden="true"></span></summary><div class="menu-panel"><fieldset><legend>${t.lang}</legend><div class="flag-picker">${flags}</div></fieldset><label>${t.theme}<select id="theme"><option value="system">${t.system}</option><option value="light">${t.light}</option><option value="dark">${t.dark}</option></select></label><nav><a href="#info">${u.info}</a><a href="#version">${u.versions}</a><a href="#imprint">${u.imprint}</a><a href="#privacy">${u.privacy}</a></nav></div></details>`;
 }
 
@@ -208,7 +208,7 @@ function scrollControls() {
 function calculatorView() {
   const t = copy[lang];
   const u = ui[lang];
-  return `<main class="page-shell calculator-page">${pageNavigation(false, true)}<header class="page-heading"><h1 class="page-title">PizzaCalc</h1><p class="page-intro">${u.intro}</p></header><aside class="profile"><label>${u.profile}<select id="profile" aria-label="${u.profile}"><option>${u.profileName}</option></select></label><small>${u.noAutomaticYeast} <a href="#info">${u.reference}</a></small></aside><div class="grid"><form id="form" class="card"><h2>${t.amount}</h2><div class="fields"><label>${t.balls}<input id="balls" type="number" min="1" max="50" step="1" value="${recipe.balls}" required></label><label>${t.weight}<span class="unit"><input id="weight" type="number" min="100" max="500" step="1" value="${recipe.ballWeight}" required><b>g</b></span></label><label>${t.hydration}<span class="unit"><input id="hydration" type="number" min="70" max="75" step="0.1" value="${recipe.hydration}" required><b>%</b></span></label><label>${t.yeast}<select id="yeast"><option value="fresh">${t.fresh}</option><option value="idy">${t.idy}</option></select></label></div><button>${t.calc}</button></form><section class="card process"><h2>${t.process}</h2><ol><li>${t.pre}</li><li>${t.cold}</li><li>${t.post}</li></ol></section></div>${resultView(t)}</main>`;
+  return `<main class="page-shell calculator-page">${pageNavigation(false, true)}<header class="page-heading"><h1 class="page-title">PizzaCalc</h1><p class="page-intro">${u.intro}</p></header><aside class="profile"><label>${u.profile}<select id="profile" aria-label="${u.profile}"><option>${u.profileName}</option></select></label><small>${u.noAutomaticYeast} <a href="#info">${u.reference}</a></small></aside><div class="grid"><form id="form" class="card"><h2>${t.amount}</h2><div class="fields"><label>${t.balls}<input id="balls" type="number" min="1" max="50" step="1" value="${recipe.balls}" required></label><label>${t.weight}<span class="unit"><input id="weight" type="number" min="100" max="500" step="1" value="${recipe.ballWeight}" required><b>g</b></span></label><label>${t.hydration}<span class="unit"><input id="hydration" type="number" min="70" max="75" step="0.1" value="${recipe.hydration}" required><b>%</b></span></label><label>${t.yeast}<select id="yeast"><option value="fresh">${t.fresh}</option><option value="idy">${t.idy}</option></select></label></div><button>${t.calc}</button></form><section class="card process"><h2>${t.process}</h2><ol><li>${t.pre}</li><li>${t.cold}</li><li>${t.post}</li></ol></section></div>${resultView(t)}${scrollControls()}</main>`;
 }
 
 function infoView() {
@@ -235,7 +235,7 @@ function privacyView() {
 function resultView(t: Copy) {
   if (!result) return '';
   const yeast = recipe.yeast === 'fresh' ? t.fresh : t.idy;
-  return `<section class="result" aria-live="polite"><div><span class="pill">${t.experimental}</span><h2>${t.result}</h2><p>${recipe.balls} × ${number(recipe.ballWeight)} g · ${number(recipe.hydration, 1)} % · ${yeast}</p></div><dl><div><dt>${t.flour}</dt><dd>${number(result.flour)} g</dd></div><div><dt>${t.water}</dt><dd>${number(result.water)} g</dd></div><div><dt>${t.salt}</dt><dd>${number(result.salt, 1)} g</dd></div><div><dt>${t.yeast}</dt><dd>${number(result.yeast, 2)} g</dd></div></dl><div class="actions"><button type="button" id="copy">${t.copy}</button><button type="button" id="link">${t.link}</button><button type="button" id="share">${t.share}</button></div></section>`;
+  return `<section id="result" class="result" aria-live="polite"><div><span class="pill">${t.experimental}</span><h2>${t.result}</h2><p>${recipe.balls} × ${number(recipe.ballWeight)} g · ${number(recipe.hydration, 1)} % · ${yeast}</p></div><dl><div><dt>${t.flour}</dt><dd>${number(result.flour)} g</dd></div><div><dt>${t.water}</dt><dd>${number(result.water)} g</dd></div><div><dt>${t.salt}</dt><dd>${number(result.salt, 1)} g</dd></div><div><dt>${t.yeast}</dt><dd>${number(result.yeast, 2)} g</dd></div></dl><div class="actions"><button type="button" id="copy">${t.copy}</button><button type="button" id="link">${t.link}</button><button type="button" id="share">${t.share}</button></div></section>`;
 }
 
 function render() {
@@ -297,6 +297,7 @@ function bind() {
     result = calculate(recipe);
     history.replaceState(null, '', `${location.pathname}?${encode(recipe)}`);
     render();
+    requestAnimationFrame(scrollResultIntoView);
   };
   if (!result) return;
   const text = () => `${ui[lang].reference}\n${copy[lang].flour}: ${number(result!.flour)} g\n${copy[lang].water}: ${number(result!.water)} g\n${copy[lang].salt}: ${number(result!.salt, 1)} g\n${copy[lang].yeast}: ${number(result!.yeast, 2)} g`;
@@ -320,11 +321,19 @@ function scrollToEdge(edge: 'top' | 'bottom') {
   });
 }
 
+function scrollResultIntoView() {
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelector<HTMLElement>('#result')?.scrollIntoView({
+    block: 'start',
+    behavior: reducedMotion ? 'auto' : 'smooth',
+  });
+}
+
 function updateScrollControls() {
   const topButton = document.querySelector<HTMLButtonElement>('#scroll-top');
   const bottomButton = document.querySelector<HTMLButtonElement>('#scroll-bottom');
   if (!topButton || !bottomButton) return;
-  const scrollable = document.documentElement.scrollHeight > window.innerHeight + 24;
+  const scrollable = document.documentElement.scrollHeight > window.innerHeight + 1;
   const nearTop = window.scrollY < 160;
   const nearBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 80;
   topButton.hidden = !scrollable || nearTop;
