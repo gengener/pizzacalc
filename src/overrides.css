@@ -2,7 +2,7 @@
 @media(prefers-color-scheme:dark){html[data-theme=system]{color-scheme:dark;--bg:#121212;--ink:#eee;--muted:#bbb;--card:#2c2c2c;--line:#4a4a4a;--accent:#ff6b61;--accent-hover:#d9534f;--accent2:#4b2927;--shadow:0 10px 30px #0006}}
 
 h1,h2,h3{font-family:inherit;letter-spacing:normal}
-.site-header{max-width:var(--page-width);align-items:center}
+.site-header{position:sticky;top:0;z-index:10;max-width:var(--page-width);align-items:center;background:var(--bg);border-bottom:1px solid var(--line)}
 .menu-panel fieldset{border:0;padding:0;margin:0}
 .menu-panel legend{font-size:.8rem;font-weight:750;color:var(--muted);margin-bottom:.35rem}
 .flag-picker{display:flex;gap:.5rem}
@@ -28,6 +28,7 @@ h1,h2,h3{font-family:inherit;letter-spacing:normal}
 .profile small{display:block;color:var(--muted)}
 .profile small a,.page-shell a,footer a{color:var(--accent);font-weight:750}
 .calculator-page .grid{grid-template-columns:1fr}
+.calculator-page .result{scroll-margin-top:5.75rem}
 
 .page-shell--subpage>.card{margin-top:1rem}
 .legal-card h3{margin:1.5rem 0 .5rem;font-size:1rem}
