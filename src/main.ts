@@ -270,7 +270,10 @@ function bind() {
   };
   const yeastElement = document.querySelector<HTMLSelectElement>('#yeast');
   if (yeastElement) {
-    yeastElement.onchange = () => safeSet('yeast', yeastElement.value);
+    yeastElement.onchange = () => {
+      recipe = {...recipe, yeast: yeastElement.value as Yeast};
+      safeSet('yeast', recipe.yeast);
+    };
   }
   document.querySelector<HTMLButtonElement>('#scroll-top')?.addEventListener('click', () => scrollToEdge('top'));
   document.querySelector<HTMLButtonElement>('#scroll-bottom')?.addEventListener('click', () => scrollToEdge('bottom'));
