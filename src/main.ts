@@ -8,12 +8,13 @@ import {
   type Result,
   type Yeast,
 } from './core';
+import { shareTextWithLink } from './share';
 
 type Lang = 'de' | 'en' | 'it';
 type Theme = 'system' | 'light' | 'dark';
 type Route = 'calculator' | 'info' | 'version' | 'imprint' | 'privacy';
 
-const version = '0.1.0-beta.8';
+const version = '0.1.0-beta.9';
 
 const copy = {
   de: {
@@ -21,7 +22,8 @@ const copy = {
     fresh: 'Frischhefe · Quellenwert', idy: 'Instant-Trockenhefe · 3:1-Praxisnäherung', calc: 'Berechnen', result: 'Dein Teig',
     flour: 'Mehl', water: 'Wasser', salt: 'Salz', process: 'Fester Ablauf', pre: '50 Min. warme Vorphase',
     cold: '24 Std. bei 4–6 °C · als 250-g-Ballen', post: '4–6 Std. warme Schlussphase',
-    experimental: 'Vorläufige Praxisreferenz – experimentell', copy: 'Text kopieren', link: 'Link kopieren', share: 'Teilen',
+    experimental: 'Vorläufige Praxisreferenz – experimentell', copyAction: 'Kopieren', copy: 'Text kopieren', link: 'Link kopieren', share: 'Teilen',
+    copyQuestion: 'Was möchtest du kopieren?', shareQuestion: 'Was möchtest du teilen?', shareText: 'Text teilen', shareLink: 'Link teilen', cancel: 'Abbrechen',
     lang: 'Sprache', theme: 'Darstellung', menu: 'Menü öffnen', system: 'System', light: 'Hell', dark: 'Dunkel',
   },
   en: {
@@ -29,7 +31,8 @@ const copy = {
     fresh: 'Fresh yeast · source value', idy: 'Instant dry yeast · declared 3:1 approximation', calc: 'Calculate', result: 'Your dough',
     flour: 'Flour', water: 'Water', salt: 'Salt', process: 'Fixed process', pre: '50 min warm pre-phase',
     cold: '24 h at 4–6 °C · as 250 g balls', post: '4–6 h warm final phase',
-    experimental: 'Preliminary practice reference – experimental', copy: 'Copy text', link: 'Copy link', share: 'Share',
+    experimental: 'Preliminary practice reference – experimental', copyAction: 'Copy', copy: 'Copy text', link: 'Copy link', share: 'Share',
+    copyQuestion: 'What would you like to copy?', shareQuestion: 'What would you like to share?', shareText: 'Share text', shareLink: 'Share link', cancel: 'Cancel',
     lang: 'Language', theme: 'Appearance', menu: 'Open menu', system: 'System', light: 'Light', dark: 'Dark',
   },
   it: {
@@ -37,7 +40,8 @@ const copy = {
     fresh: 'Lievito fresco · valore della fonte', idy: 'Lievito secco istantaneo · approssimazione pratica 3:1', calc: 'Calcola', result: 'Il tuo impasto',
     flour: 'Farina', water: 'Acqua', salt: 'Sale', process: 'Procedimento fisso', pre: '50 min di riposo iniziale al caldo',
     cold: '24 ore a 4–6 °C · in panetti da 250 g', post: '4–6 ore finali a temperatura ambiente',
-    experimental: 'Riferimento pratico preliminare – sperimentale', copy: 'Copia testo', link: 'Copia link', share: 'Condividi',
+    experimental: 'Riferimento pratico preliminare – sperimentale', copyAction: 'Copia', copy: 'Copia testo', link: 'Copia link', share: 'Condividi',
+    copyQuestion: 'Cosa vuoi copiare?', shareQuestion: 'Cosa vuoi condividere?', shareText: 'Condividi testo', shareLink: 'Condividi link', cancel: 'Annulla',
     lang: 'Lingua', theme: 'Aspetto', menu: 'Apri menu', system: 'Sistema', light: 'Chiaro', dark: 'Scuro',
   },
 } as const;
@@ -112,6 +116,7 @@ type Copy = { [K in keyof typeof copy.de]: string };
 
 const releases = {
   de: [
+    ['0.1.0-beta.9', 'Veröffentlichungszeit wird nachgereicht', 'Profilhinweis übersichtlicher getrennt, Kopier- und Teilen-Aktionen mit klassischen Symbolen jederzeit verfügbar gemacht, Auswahl zwischen Rezepttext und Link ergänzt, den Link im geteilten Rezepttext abgesetzt und die Kopfzeile kompakter gestaltet.'],
     ['0.1.0-beta.8', '1. August 2026, 16:54:48 MESZ', 'Sprachwahl auf Italienisch, Deutsch und Englisch geordnet, nach der Berechnung zum Ergebnis gesprungen, Scrollsteuerung auf der Rechnerseite ergänzt und den Kopfbereich beim Scrollen sichtbar gehalten.'],
     ['0.1.0-beta.7', '1. August 2026, 15:41:15 MESZ', 'Seitentitel und Einleitungstexte auf schmalen Bildschirmen wieder korrekt untereinander angeordnet.'],
     ['0.1.0-beta.6', '1. August 2026, 14:56:23 MESZ', 'Footer-Links auf schmalen Bildschirmen getrennt, „Fester Ablauf“ unter „Teigmenge“ angeordnet, die Seitenbreite auf einheitliche 800 px gesetzt und interne Seitenwechsel an den Seitenanfang geführt.'],
@@ -122,6 +127,7 @@ const releases = {
     ['0.1.0-beta.1', '31. Juli 2026, 20:47:16 MESZ', 'Erste öffentliche Praxis-Beta mit skalierbarer Canotto-Praxisreferenz, Zutatenberechnung, Ergebnisanzeige sowie Kopier-, Link- und Teilen-Funktionen veröffentlicht.'],
   ],
   en: [
+    ['0.1.0-beta.9', 'Publication time to follow', 'Separated the profile note more clearly, made icon-based copy and share actions available at all times, added a choice between recipe text and link, separated the link in shared recipe text, and made the header more compact.'],
     ['0.1.0-beta.8', '1 August 2026, 16:54:48 CEST', 'Ordered the language selection as Italian, German, and English, scrolled calculations to their result, added scroll controls to the calculator page, and kept the header visible while scrolling.'],
     ['0.1.0-beta.7', '1 August 2026, 15:41:15 CEST', 'Restored stacked page titles and introductory text on narrow screens.'],
     ['0.1.0-beta.6', '1 August 2026, 14:56:23 CEST', 'Separated the footer links on narrow screens, placed the fixed process below dough amount, standardized the page width at 800 px, and made internal page changes start at the top.'],
@@ -132,6 +138,7 @@ const releases = {
     ['0.1.0-beta.1', '31 July 2026, 20:47:16 CEST', 'Published the first public practice beta with a scalable Canotto reference, ingredient calculation, result display, and copy, link and share actions.'],
   ],
   it: [
+    ['0.1.0-beta.9', 'Orario di pubblicazione da aggiungere', 'Separata più chiaramente la nota del profilo, rese sempre disponibili le azioni di copia e condivisione con icone, aggiunta la scelta tra testo della ricetta e link, separato il link nel testo condiviso e resa più compatta l’intestazione.'],
     ['0.1.0-beta.8', '1 agosto 2026, 16:54:48 CEST', 'Ordinata la selezione delle lingue come italiano, tedesco e inglese, aggiunto il salto al risultato dopo il calcolo, estesi i comandi di scorrimento alla pagina del calcolatore e mantenuta visibile l’intestazione durante lo scorrimento.'],
     ['0.1.0-beta.7', '1 agosto 2026, 15:41:15 CEST', 'Ripristinata la disposizione verticale dei titoli di pagina e dei testi introduttivi sugli schermi stretti.'],
     ['0.1.0-beta.6', '1 agosto 2026, 14:56:23 CEST', 'Separati i link del piè di pagina sugli schermi stretti, collocato il procedimento fisso sotto la quantità d’impasto, uniformata la larghezza delle pagine a 800 px e riportati all’inizio i cambi di pagina interni.'],
@@ -175,12 +182,18 @@ function flagSvg(value: Lang) {
   return '<svg class="flag" viewBox="0 0 30 20" aria-hidden="true"><path fill="#b22234" d="M0 0h30v20H0z"/><path stroke="#fff" stroke-width="1.55" d="M0 2.3h30M0 5.4h30M0 8.5h30M0 11.6h30M0 14.7h30M0 17.8h30"/><path fill="#3c3b6e" d="M0 0h13v10.8H0z"/><g fill="#fff"><circle cx="2" cy="2" r=".55"/><circle cx="5" cy="2" r=".55"/><circle cx="8" cy="2" r=".55"/><circle cx="11" cy="2" r=".55"/><circle cx="3.5" cy="4.5" r=".55"/><circle cx="6.5" cy="4.5" r=".55"/><circle cx="9.5" cy="4.5" r=".55"/><circle cx="2" cy="7" r=".55"/><circle cx="5" cy="7" r=".55"/><circle cx="8" cy="7" r=".55"/><circle cx="11" cy="7" r=".55"/><circle cx="3.5" cy="9.4" r=".55"/><circle cx="6.5" cy="9.4" r=".55"/><circle cx="9.5" cy="9.4" r=".55"/></g></svg>';
 }
 
-function iconSvg(name: 'back' | 'up' | 'down') {
-  const path = name === 'back'
-    ? '<path d="M15 18l-6-6 6-6"/><path d="M9 12h12"/>'
-    : name === 'up'
-      ? '<path d="M7 14l5-5 5 5"/>'
-      : '<path d="M7 10l5 5 5-5"/>';
+function iconSvg(name: 'back' | 'up' | 'down' | 'copy' | 'share' | 'text' | 'link' | 'close') {
+  const paths = {
+    back: '<path d="M15 18l-6-6 6-6"/><path d="M9 12h12"/>',
+    up: '<path d="M7 14l5-5 5 5"/>',
+    down: '<path d="M7 10l5 5 5-5"/>',
+    copy: '<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',
+    share: '<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 10.5l6.8-4M8.6 13.5l6.8 4"/>',
+    text: '<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/>',
+    link: '<path d="M10 13a5 5 0 0 0 7.1.1l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.1-.1l-2 2A5 5 0 0 0 12 20l1.1-1.1"/>',
+    close: '<path d="M6 6l12 12M18 6L6 18"/>',
+  } as const;
+  const path = paths[name];
   return `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${path}</svg>`;
 }
 
@@ -211,7 +224,7 @@ function scrollControls() {
 function calculatorView() {
   const t = copy[lang];
   const u = ui[lang];
-  return `<main class="page-shell calculator-page">${pageNavigation(false, true)}<header class="page-heading"><h1 class="page-title">PizzaCalc</h1><p class="page-intro">${u.intro}</p></header><aside class="profile"><label>${u.profile}<select id="profile" aria-label="${u.profile}"><option>${u.profileName}</option></select></label><small>${u.noAutomaticYeast} <a href="#info">${u.reference}</a></small></aside><div class="grid"><form id="form" class="card"><h2>${t.amount}</h2><div class="fields"><label>${t.balls}<input id="balls" type="number" min="1" max="50" step="1" value="${recipe.balls}" required></label><label>${t.weight}<span class="unit"><input id="weight" type="number" min="100" max="500" step="1" value="${recipe.ballWeight}" required><b>g</b></span></label><label>${t.hydration}<span class="unit"><input id="hydration" type="number" min="70" max="75" step="0.1" value="${recipe.hydration}" required><b>%</b></span></label><label>${t.yeast}<select id="yeast"><option value="fresh">${t.fresh}</option><option value="idy">${t.idy}</option></select></label></div><button>${t.calc}</button></form><section class="card process"><h2>${t.process}</h2><ol><li>${t.pre}</li><li>${t.cold}</li><li>${t.post}</li></ol></section></div>${resultView(t)}${scrollControls()}</main>`;
+  return `<main class="page-shell calculator-page">${pageNavigation(false, true)}<header class="page-heading"><h1 class="page-title">PizzaCalc</h1><p class="page-intro">${u.intro}</p></header><aside class="profile"><label>${u.profile}<select id="profile" aria-label="${u.profile}"><option>${u.profileName}</option></select></label><small><span>${u.noAutomaticYeast}</span><a href="#info">${u.reference}</a></small></aside><div class="grid"><form id="form" class="card"><h2>${t.amount}</h2><div class="fields"><label>${t.balls}<input id="balls" type="number" min="1" max="50" step="1" value="${recipe.balls}" required></label><label>${t.weight}<span class="unit"><input id="weight" type="number" min="100" max="500" step="1" value="${recipe.ballWeight}" required><b>g</b></span></label><label>${t.hydration}<span class="unit"><input id="hydration" type="number" min="70" max="75" step="0.1" value="${recipe.hydration}" required><b>%</b></span></label><label>${t.yeast}<select id="yeast"><option value="fresh">${t.fresh}</option><option value="idy">${t.idy}</option></select></label></div><button>${t.calc}</button></form><section class="card process"><h2>${t.process}</h2><ol><li>${t.pre}</li><li>${t.cold}</li><li>${t.post}</li></ol></section></div>${resultView(t)}${choiceDialogView(t)}${scrollControls()}</main>`;
 }
 
 function infoView() {
@@ -236,9 +249,17 @@ function privacyView() {
 }
 
 function resultView(t: Copy) {
-  if (!result) return '';
+  if (!result) return `<section class="card share-card">${sharingActionsView(t)}</section>`;
   const yeast = recipe.yeast === 'fresh' ? t.fresh : t.idy;
-  return `<section id="result" class="result" aria-live="polite"><div><span class="pill">${t.experimental}</span><h2>${t.result}</h2><p>${recipe.balls} × ${number(recipe.ballWeight)} g · ${number(recipe.hydration, 1)} % · ${yeast}</p></div><dl><div><dt>${t.flour}</dt><dd>${number(result.flour)} g</dd></div><div><dt>${t.water}</dt><dd>${number(result.water)} g</dd></div><div><dt>${t.salt}</dt><dd>${number(result.salt, 1)} g</dd></div><div><dt>${t.yeast}</dt><dd>${number(result.yeast, 2)} g</dd></div></dl><div class="actions"><button type="button" id="copy">${t.copy}</button><button type="button" id="link">${t.link}</button><button type="button" id="share">${t.share}</button></div></section>`;
+  return `<section id="result" class="result" aria-live="polite"><div><span class="pill">${t.experimental}</span><h2>${t.result}</h2><p>${recipe.balls} × ${number(recipe.ballWeight)} g · ${number(recipe.hydration, 1)} % · ${yeast}</p></div><dl><div><dt>${t.flour}</dt><dd>${number(result.flour)} g</dd></div><div><dt>${t.water}</dt><dd>${number(result.water)} g</dd></div><div><dt>${t.salt}</dt><dd>${number(result.salt, 1)} g</dd></div><div><dt>${t.yeast}</dt><dd>${number(result.yeast, 2)} g</dd></div></dl>${sharingActionsView(t)}</section>`;
+}
+
+function sharingActionsView(t: Copy) {
+  return `<div class="actions sharing-actions"><button type="button" id="copy-action" class="action-button">${iconSvg('copy')}<span>${t.copyAction}</span></button><button type="button" id="share-action" class="action-button">${iconSvg('share')}<span>${t.share}</span></button></div>`;
+}
+
+function choiceDialogView(t: Copy) {
+  return `<dialog id="share-choice" class="choice-dialog" aria-labelledby="choice-title"><form method="dialog"><div class="choice-header"><h2 id="choice-title"></h2><button class="icon-button" value="cancel" aria-label="${t.cancel}" title="${t.cancel}">${iconSvg('close')}</button></div><div class="choice-options"><button type="button" id="choice-text" class="choice-option">${iconSvg('text')}<span id="choice-text-label"></span></button><button type="button" id="choice-link" class="choice-option">${iconSvg('link')}<span id="choice-link-label"></span></button></div></form></dialog>`;
 }
 
 function render() {
@@ -302,13 +323,80 @@ function bind() {
     render();
     requestAnimationFrame(scrollResultIntoView);
   };
-  if (!result) return;
-  const text = () => `${ui[lang].reference}\n${copy[lang].flour}: ${number(result!.flour)} g\n${copy[lang].water}: ${number(result!.water)} g\n${copy[lang].salt}: ${number(result!.salt, 1)} g\n${copy[lang].yeast}: ${number(result!.yeast, 2)} g`;
-  document.querySelector<HTMLButtonElement>('#copy')!.onclick = () => navigator.clipboard.writeText(text());
-  document.querySelector<HTMLButtonElement>('#link')!.onclick = () => navigator.clipboard.writeText(location.href);
-  document.querySelector<HTMLButtonElement>('#share')!.onclick = () => navigator.share
-    ? navigator.share({ title: 'PizzaCalc', text: text(), url: location.href })
-    : navigator.clipboard.writeText(location.href);
+  bindSharingActions();
+}
+
+function recipeText() {
+  if (!result) return '';
+  return `${ui[lang].reference}\n${copy[lang].flour}: ${number(result.flour)} g\n${copy[lang].water}: ${number(result.water)} g\n${copy[lang].salt}: ${number(result.salt, 1)} g\n${copy[lang].yeast}: ${number(result.yeast, 2)} g`;
+}
+
+function bindSharingActions() {
+  document.querySelector<HTMLButtonElement>('#copy-action')!.onclick = () => {
+    if (result) openChoiceDialog('copy');
+    else void navigator.clipboard.writeText(location.href);
+  };
+  document.querySelector<HTMLButtonElement>('#share-action')!.onclick = () => {
+    if (result) openChoiceDialog('share');
+    else void shareLink();
+  };
+  document.querySelector<HTMLButtonElement>('#choice-text')!.onclick = () => void applyChoice('text');
+  document.querySelector<HTMLButtonElement>('#choice-link')!.onclick = () => void applyChoice('link');
+}
+
+function openChoiceDialog(mode: 'copy' | 'share') {
+  const t = copy[lang];
+  const dialog = document.querySelector<HTMLDialogElement>('#share-choice')!;
+  dialog.dataset.mode = mode;
+  document.querySelector<HTMLElement>('#choice-title')!.textContent = mode === 'copy' ? t.copyQuestion : t.shareQuestion;
+  document.querySelector<HTMLElement>('#choice-text-label')!.textContent = mode === 'copy' ? t.copy : t.shareText;
+  document.querySelector<HTMLElement>('#choice-link-label')!.textContent = mode === 'copy' ? t.link : t.shareLink;
+  dialog.showModal();
+}
+
+async function applyChoice(kind: 'text' | 'link') {
+  const dialog = document.querySelector<HTMLDialogElement>('#share-choice')!;
+  const mode = dialog.dataset.mode;
+  try {
+    if (mode === 'copy') {
+      await navigator.clipboard.writeText(kind === 'text' ? recipeText() : location.href);
+    } else if (kind === 'text') {
+      await shareRecipeText();
+    } else {
+      await shareLink();
+    }
+  } finally {
+    dialog.close();
+  }
+}
+
+async function shareRecipeText() {
+  const text = shareTextWithLink(recipeText(), location.href);
+  if (navigator.share) {
+    try {
+      await navigator.share({ title: 'PizzaCalc', text });
+      return;
+    } catch (error) {
+      if (isShareCancellation(error)) return;
+    }
+  }
+  await navigator.clipboard.writeText(text);
+}
+
+async function shareLink() {
+  if (navigator.share) {
+    try {
+      await navigator.share({ title: 'PizzaCalc', url: location.href });
+      return;
+    } catch (error) {
+      if (isShareCancellation(error)) return;
+    }
+  }
+  await navigator.clipboard.writeText(location.href);
+}
+
+function isShareCancellation(error: unknown) {
+  return error instanceof DOMException && error.name === 'AbortError';
 }
 
 function closeMenuOnOutsidePointer(event: PointerEvent) {
