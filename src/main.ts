@@ -112,21 +112,21 @@ type Copy = { [K in keyof typeof copy.de]: string };
 
 const releases = {
   de: [
-    ['0.1.0-beta.5', '1. August 2026, 14:11:58 MESZ', 'Instant-Trockenhefe als Standard für neue Seiten eingeführt, gespeicherte Auswahlen und Rezeptlinks berücksichtigt sowie Navigation, Seitenlayout, Sprachsymbole, Theme-Voreinstellung und rechtliche Informationen vereinheitlicht.'],
+    ['0.1.0-beta.5', '1. August 2026, 14:18:45 MESZ', 'Instant-Trockenhefe als Standard für neue Seiten eingeführt, gespeicherte Auswahlen und Rezeptlinks berücksichtigt sowie Navigation, Seitenlayout, Sprachsymbole, Theme-Voreinstellung und rechtliche Informationen vereinheitlicht.'],
     ['0.1.0-beta.4', '1. August 2026, 13:22:10 MESZ', 'Versionshinweise von der Tabelle in eine übersichtliche chronologische Liste umgestellt. Alle Einträge zeigen nun den vollständigen Veröffentlichungszeitstempel.'],
     ['0.1.0-beta.3', '1. August 2026, 13:02:01 MESZ', 'Versionshistorie eingeführt und die bisherigen öffentlichen Beta-Stände rückwirkend dokumentiert.'],
     ['0.1.0-beta.2', '1. August 2026, 12:43:44 MESZ', 'Hamburger-Menü, Flaggenwahl sowie System-, Hell- und Dunkelmodus ergänzt. Informationsseite und anklickbare Versionsanzeige eingeführt.'],
     ['0.1.0-beta.1', '31. Juli 2026, 20:47:16 MESZ', 'Erste öffentliche Praxis-Beta mit skalierbarer Canotto-Praxisreferenz, Zutatenberechnung, Ergebnisanzeige sowie Kopier-, Link- und Teilen-Funktionen veröffentlicht.'],
   ],
   en: [
-    ['0.1.0-beta.5', '1 August 2026, 14:11:58 CEST', 'Made instant dry yeast the default for new visits while respecting saved choices and recipe links, and standardized navigation, page layout, language icons, the theme default, and legal information.'],
+    ['0.1.0-beta.5', '1 August 2026, 14:18:45 CEST', 'Made instant dry yeast the default for new visits while respecting saved choices and recipe links, and standardized navigation, page layout, language icons, the theme default, and legal information.'],
     ['0.1.0-beta.4', '1 August 2026, 13:22:10 CEST', 'Changed the release notes from a table to a clear chronological list. Every entry now includes the full release timestamp.'],
     ['0.1.0-beta.3', '1 August 2026, 13:02:01 CEST', 'Introduced the release history and retrospectively documented the previous public beta releases.'],
     ['0.1.0-beta.2', '1 August 2026, 12:43:44 CEST', 'Added the hamburger menu, flag selection, and system, light and dark themes. Introduced the information page and clickable version label.'],
     ['0.1.0-beta.1', '31 July 2026, 20:47:16 CEST', 'Published the first public practice beta with a scalable Canotto reference, ingredient calculation, result display, and copy, link and share actions.'],
   ],
   it: [
-    ['0.1.0-beta.5', '1 agosto 2026, 14:11:58 CEST', 'Impostato il lievito secco istantaneo come valore predefinito per le nuove visite, rispettando le scelte salvate e i link delle ricette, e uniformati navigazione, layout, simboli delle lingue, tema predefinito e informazioni legali.'],
+    ['0.1.0-beta.5', '1 agosto 2026, 14:18:45 CEST', 'Impostato il lievito secco istantaneo come valore predefinito per le nuove visite, rispettando le scelte salvate e i link delle ricette, e uniformati navigazione, layout, simboli delle lingue, tema predefinito e informazioni legali.'],
     ['0.1.0-beta.4', '1 agosto 2026, 13:22:10 CEST', 'Trasformate le note di versione da tabella a elenco cronologico chiaro. Ogni voce mostra ora il timestamp completo della pubblicazione.'],
     ['0.1.0-beta.3', '1 agosto 2026, 13:02:01 CEST', 'Introdotta la cronologia delle versioni e documentate retroattivamente le precedenti beta pubbliche.'],
     ['0.1.0-beta.2', '1 agosto 2026, 12:43:44 CEST', 'Aggiunti il menu hamburger, la selezione tramite bandiere e i temi sistema, chiaro e scuro. Introdotte la pagina informativa e la versione cliccabile.'],
