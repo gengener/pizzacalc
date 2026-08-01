@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 
 const mainSource = readFileSync(new URL('./main.ts', import.meta.url), 'utf8');
 const layoutCss = readFileSync(new URL('./overrides.css', import.meta.url), 'utf8');
+const baseCss = readFileSync(new URL('./styles.css', import.meta.url), 'utf8');
 
 describe('layout and route contracts', () => {
   it('keeps legal links as separate flex items without a hidden separator', () => {
@@ -34,12 +35,37 @@ describe('layout and route contracts', () => {
   });
 
   it('provides overflow-dependent up and down controls on the calculator', () => {
-    expect(mainSource).toContain('${resultView(t)}${scrollControls()}</main>');
+    expect(mainSource).toContain('${resultView(t)}${choiceDialogView(t)}${scrollControls()}</main>');
     expect(mainSource).toContain('document.documentElement.scrollHeight > window.innerHeight + 1');
   });
 
   it('keeps the menu and PizzaCalc brand visible while scrolling', () => {
     expect(layoutCss).toMatch(/\.site-header\{[^}]*position:sticky[^}]*top:0[^}]*z-index:10/);
+  });
+
+  it('uses a more compact header without shrinking its controls', () => {
+    expect(layoutCss).toMatch(/\.site-header\{[^}]*padding:\.7rem 1\.25rem/);
+    expect(baseCss).toContain('.menu summary{width:2.75rem;height:2.75rem');
+    expect(baseCss).toContain('.brand{grid-column:2;font-weight:850;font-size:1.35rem');
+  });
+
+  it('puts the current practice reference on its own line', () => {
+    expect(mainSource).toContain('<small><span>${u.noAutomaticYeast}</span><a href="#info">${u.reference}</a></small>');
+    expect(layoutCss).toContain('.profile small a{display:block');
+  });
+
+  it('keeps copy and share actions visible before a calculation', () => {
+    expect(mainSource).toContain("if (!result) return `<section class=\"card share-card\">${sharingActionsView(t)}</section>`;");
+    expect(mainSource).toContain('id="copy-action"');
+    expect(mainSource).toContain('id="share-action"');
+  });
+
+  it('offers text and link choices after a calculation', () => {
+    expect(mainSource).toContain("if (result) openChoiceDialog('copy')");
+    expect(mainSource).toContain("if (result) openChoiceDialog('share')");
+    expect(mainSource).toContain('<dialog id="share-choice"');
+    expect(mainSource).toContain("iconSvg('text')");
+    expect(mainSource).toContain("iconSvg('link')");
   });
 
   it('resets the viewport after a hash route change', () => {
