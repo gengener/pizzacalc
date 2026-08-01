@@ -13,7 +13,7 @@ type Lang = 'de' | 'en' | 'it';
 type Theme = 'system' | 'light' | 'dark';
 type Route = 'calculator' | 'info' | 'version' | 'imprint' | 'privacy';
 
-const version = '0.1.0-beta.5';
+const version = '0.1.0-beta.6';
 
 const copy = {
   de: {
@@ -242,7 +242,7 @@ function render() {
         : activeRoute === 'privacy' ? privacyView()
           : calculatorView();
   const u = ui[lang];
-  document.querySelector('#app')!.innerHTML = `<header class="site-header">${menuView()}<a class="brand" href="${location.pathname}${location.search}">PizzaCalc</a></header>${body}<footer><a href="#imprint">${u.imprint}</a><span aria-hidden="true"> · </span><a href="#privacy">${u.privacy}</a></footer>`;
+  document.querySelector('#app')!.innerHTML = `<header class="site-header">${menuView()}<a class="brand" href="${location.pathname}${location.search}">PizzaCalc</a></header>${body}<footer class="footer-links"><a href="#imprint">${u.imprint}</a><a href="#privacy">${u.privacy}</a></footer>`;
   setValues();
   bind();
   requestAnimationFrame(updateScrollControls);
@@ -325,6 +325,14 @@ function updateScrollControls() {
   bottomButton.hidden = !scrollable || nearBottom;
 }
 
+function renderRouteFromHash() {
+  render();
+  requestAnimationFrame(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    updateScrollControls();
+  });
+}
+
 document.addEventListener('pointerdown', closeMenuOnOutsidePointer);
 document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape') {
@@ -332,7 +340,7 @@ document.addEventListener('keydown', (event) => {
     if (menu) menu.open = false;
   }
 });
-window.addEventListener('hashchange', render);
+window.addEventListener('hashchange', renderRouteFromHash);
 window.addEventListener('scroll', updateScrollControls, { passive: true });
 window.addEventListener('resize', updateScrollControls);
 render();
