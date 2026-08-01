@@ -1,7 +1,8 @@
+:root{--page-width:800px}
 @media(prefers-color-scheme:dark){html[data-theme=system]{color-scheme:dark;--bg:#121212;--ink:#eee;--muted:#bbb;--card:#2c2c2c;--line:#4a4a4a;--accent:#ff6b61;--accent-hover:#d9534f;--accent2:#4b2927;--shadow:0 10px 30px #0006}}
 
 h1,h2,h3{font-family:inherit;letter-spacing:normal}
-.site-header{align-items:center}
+.site-header{max-width:var(--page-width);align-items:center}
 .menu-panel fieldset{border:0;padding:0;margin:0}
 .menu-panel legend{font-size:.8rem;font-weight:750;color:var(--muted);margin-bottom:.35rem}
 .flag-picker{display:flex;gap:.5rem}
@@ -11,8 +12,7 @@ h1,h2,h3{font-family:inherit;letter-spacing:normal}
 .menu-panel nav{display:grid;border-top:1px solid var(--line);padding-top:.55rem}
 .menu-panel nav a{padding:.5rem 0;text-decoration:none}
 
-.page-shell{max-width:1060px;margin:auto;padding:2rem 1.25rem 4rem}
-.page-shell--subpage{max-width:800px}
+.page-shell,.page-shell--subpage{max-width:var(--page-width);margin:auto;padding:2rem 1.25rem 4rem}
 .page-navigation{display:flex;justify-content:space-between;align-items:center;min-height:2.75rem;margin-bottom:1.35rem}
 .navigation-spacer{width:2.75rem;height:2.75rem}
 .page-heading{min-height:6.7rem;margin-bottom:1.75rem}
@@ -27,6 +27,7 @@ h1,h2,h3{font-family:inherit;letter-spacing:normal}
 .profile select{display:block;width:min(22rem,100%);padding:.65rem .75rem;margin-top:.3rem}
 .profile small{display:block;color:var(--muted)}
 .profile small a,.page-shell a,footer a{color:var(--accent);font-weight:750}
+.calculator-page .grid{grid-template-columns:1fr}
 
 .page-shell--subpage>.card{margin-top:1rem}
 .legal-card h3{margin:1.5rem 0 .5rem;font-size:1rem}
@@ -40,7 +41,9 @@ h1,h2,h3{font-family:inherit;letter-spacing:normal}
 .release-item time{display:block;margin-top:.35rem;color:var(--muted);font-size:.9rem}
 .release-item p{margin:0;line-height:1.55}
 
-.scroll-controls{position:fixed;right:max(1rem,calc((100vw - 1120px)/2));bottom:1rem;z-index:4;display:grid;gap:.55rem}
+.footer-links{display:flex;justify-content:center;align-items:center;gap:.85rem;flex-wrap:wrap}
+
+.scroll-controls{position:fixed;right:max(1rem,calc((100vw - var(--page-width))/2 + 1.25rem));bottom:1rem;z-index:4;display:grid;gap:.55rem}
 .scroll-control[hidden]{display:none}
 
 @media(max-width:620px){.release-item{grid-template-columns:1fr;gap:.7rem}.page-heading{min-height:5.8rem}.scroll-controls{right:1rem}}
