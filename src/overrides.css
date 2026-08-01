@@ -15,7 +15,7 @@ h1,h2,h3{font-family:inherit;letter-spacing:normal}
 .page-shell,.page-shell--subpage{max-width:var(--page-width);margin:auto;padding:2rem 1.25rem 4rem}
 .page-navigation{display:flex;justify-content:space-between;align-items:center;min-height:2.75rem;margin-bottom:1.35rem}
 .navigation-spacer{width:2.75rem;height:2.75rem}
-.page-heading{min-height:6.7rem;margin-bottom:1.75rem}
+.page-heading{max-width:none;min-height:6.7rem;margin:0 0 1.75rem;padding:0;display:block}
 .page-title{margin:0;color:var(--accent);font-size:clamp(2rem,5vw,2.8rem);line-height:1.08;font-weight:850}
 .page-intro{max-width:680px;margin:.65rem 0 0;color:var(--muted);font-size:1.05rem}
 .version-link{text-decoration:none}

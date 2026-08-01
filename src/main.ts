@@ -13,7 +13,7 @@ type Lang = 'de' | 'en' | 'it';
 type Theme = 'system' | 'light' | 'dark';
 type Route = 'calculator' | 'info' | 'version' | 'imprint' | 'privacy';
 
-const version = '0.1.0-beta.6';
+const version = '0.1.0-beta.7';
 
 const copy = {
   de: {

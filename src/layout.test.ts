@@ -18,6 +18,10 @@ describe('layout and route contracts', () => {
     expect(layoutCss).toContain('.calculator-page .grid{grid-template-columns:1fr}');
   });
 
+  it('stacks page titles above their introductory text', () => {
+    expect(layoutCss).toMatch(/\.page-heading\{[^}]*margin:0 0 1\.75rem[^}]*padding:0[^}]*display:block/);
+  });
+
   it('resets the viewport after a hash route change', () => {
     expect(mainSource).toContain("window.addEventListener('hashchange', renderRouteFromHash)");
     expect(mainSource).toContain("window.scrollTo({ top: 0, left: 0, behavior: 'auto' })");
