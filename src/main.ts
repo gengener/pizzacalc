@@ -116,7 +116,7 @@ type Copy = { [K in keyof typeof copy.de]: string };
 
 const releases = {
   de: [
-    ['0.1.0-beta.9', 'Veröffentlichungszeit wird nachgereicht', 'Profilhinweis übersichtlicher getrennt, Kopier- und Teilen-Aktionen mit klassischen Symbolen jederzeit verfügbar gemacht, Auswahl zwischen Rezepttext und Link ergänzt, den Link im geteilten Rezepttext abgesetzt und die Kopfzeile kompakter gestaltet.'],
+    ['0.1.0-beta.9', '1. August 2026, 20:44:27 MESZ', 'Profilhinweis übersichtlicher getrennt, Kopier- und Teilen-Aktionen mit klassischen Symbolen jederzeit verfügbar gemacht, Auswahl zwischen Rezepttext und Link ergänzt, den Link im geteilten Rezepttext abgesetzt und die Kopfzeile kompakter gestaltet.'],
     ['0.1.0-beta.8', '1. August 2026, 16:54:48 MESZ', 'Sprachwahl auf Italienisch, Deutsch und Englisch geordnet, nach der Berechnung zum Ergebnis gesprungen, Scrollsteuerung auf der Rechnerseite ergänzt und den Kopfbereich beim Scrollen sichtbar gehalten.'],
     ['0.1.0-beta.7', '1. August 2026, 15:41:15 MESZ', 'Seitentitel und Einleitungstexte auf schmalen Bildschirmen wieder korrekt untereinander angeordnet.'],
     ['0.1.0-beta.6', '1. August 2026, 14:56:23 MESZ', 'Footer-Links auf schmalen Bildschirmen getrennt, „Fester Ablauf“ unter „Teigmenge“ angeordnet, die Seitenbreite auf einheitliche 800 px gesetzt und interne Seitenwechsel an den Seitenanfang geführt.'],
@@ -127,7 +127,7 @@ const releases = {
     ['0.1.0-beta.1', '31. Juli 2026, 20:47:16 MESZ', 'Erste öffentliche Praxis-Beta mit skalierbarer Canotto-Praxisreferenz, Zutatenberechnung, Ergebnisanzeige sowie Kopier-, Link- und Teilen-Funktionen veröffentlicht.'],
   ],
   en: [
-    ['0.1.0-beta.9', 'Publication time to follow', 'Separated the profile note more clearly, made icon-based copy and share actions available at all times, added a choice between recipe text and link, separated the link in shared recipe text, and made the header more compact.'],
+    ['0.1.0-beta.9', '1 August 2026, 20:44:27 CEST', 'Separated the profile note more clearly, made icon-based copy and share actions available at all times, added a choice between recipe text and link, separated the link in shared recipe text, and made the header more compact.'],
     ['0.1.0-beta.8', '1 August 2026, 16:54:48 CEST', 'Ordered the language selection as Italian, German, and English, scrolled calculations to their result, added scroll controls to the calculator page, and kept the header visible while scrolling.'],
     ['0.1.0-beta.7', '1 August 2026, 15:41:15 CEST', 'Restored stacked page titles and introductory text on narrow screens.'],
     ['0.1.0-beta.6', '1 August 2026, 14:56:23 CEST', 'Separated the footer links on narrow screens, placed the fixed process below dough amount, standardized the page width at 800 px, and made internal page changes start at the top.'],
@@ -138,7 +138,7 @@ const releases = {
     ['0.1.0-beta.1', '31 July 2026, 20:47:16 CEST', 'Published the first public practice beta with a scalable Canotto reference, ingredient calculation, result display, and copy, link and share actions.'],
   ],
   it: [
-    ['0.1.0-beta.9', 'Orario di pubblicazione da aggiungere', 'Separata più chiaramente la nota del profilo, rese sempre disponibili le azioni di copia e condivisione con icone, aggiunta la scelta tra testo della ricetta e link, separato il link nel testo condiviso e resa più compatta l’intestazione.'],
+    ['0.1.0-beta.9', '1 agosto 2026, 20:44:27 CEST', 'Separata più chiaramente la nota del profilo, rese sempre disponibili le azioni di copia e condivisione con icone, aggiunta la scelta tra testo della ricetta e link, separato il link nel testo condiviso e resa più compatta l’intestazione.'],
     ['0.1.0-beta.8', '1 agosto 2026, 16:54:48 CEST', 'Ordinata la selezione delle lingue come italiano, tedesco e inglese, aggiunto il salto al risultato dopo il calcolo, estesi i comandi di scorrimento alla pagina del calcolatore e mantenuta visibile l’intestazione durante lo scorrimento.'],
     ['0.1.0-beta.7', '1 agosto 2026, 15:41:15 CEST', 'Ripristinata la disposizione verticale dei titoli di pagina e dei testi introduttivi sugli schermi stretti.'],
     ['0.1.0-beta.6', '1 agosto 2026, 14:56:23 CEST', 'Separati i link del piè di pagina sugli schermi stretti, collocato il procedimento fisso sotto la quantità d’impasto, uniformata la larghezza delle pagine a 800 px e riportati all’inizio i cambi di pagina interni.'],
