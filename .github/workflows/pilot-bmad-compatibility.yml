@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   probe:
@@ -16,6 +16,8 @@ jobs:
     steps:
       - name: Check out pilot branch
         uses: actions/checkout@v4
+        with:
+          ref: pilot/bmad-karpathy-compatibility
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -45,6 +47,7 @@ jobs:
             | tee pilot-results/bmad-list-tools.txt
 
       - name: Install BMad headlessly for Codex
+        if: ${{ !hashFiles('_bmad/_config/manifest.yaml') }}
         run: |
           npm exec --yes --package=bmad-method@6.10.0 -- \
             bmad-method install \
@@ -62,27 +65,35 @@ jobs:
         run: |
           test -f _bmad/_config/manifest.yaml
           test -d .agents/skills
-          test -s pilot-results/bmad-install.txt
+
+      - name: Verify PizzaCalc after BMad installation
+        run: npm run check
+
+      - name: Persist verified BMad files to pilot branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add _bmad .agents
+          if git diff --cached --quiet; then
+            echo "No generated BMad changes to commit."
+          else
+            git commit -m "pilot: install BMad for Codex"
+            git push origin HEAD:pilot/bmad-karpathy-compatibility
+          fi
 
       - name: Record generated tree and repository diff
+        if: always()
         run: |
           find _bmad .agents _bmad-output -type f 2>/dev/null | sort \
             | tee pilot-results/generated-files.txt
           git status --short | tee pilot-results/git-status.txt
           git diff --stat | tee pilot-results/git-diff-stat.txt
 
-      - name: Verify PizzaCalc after BMad installation
-        run: npm run check
-
       - name: Upload installation evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: bmad-installation-probe
-          path: |
-            pilot-results/
-            _bmad/
-            .agents/
-            _bmad-output/
+          path: pilot-results/
           if-no-files-found: warn
           retention-days: 7
