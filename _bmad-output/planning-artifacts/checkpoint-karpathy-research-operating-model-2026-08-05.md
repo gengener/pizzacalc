@@ -181,5 +181,5 @@ Diese Spezifikation soll mindestens enthalten:
 - Deployment: `NOT_EXECUTED`;
 - Produktcodeänderung: `NOT_EXECUTED`;
 - automatische Webrecherche: `NOT_EXECUTED`;
-- fachliche Modellhochsstufung: `NOT_EXECUTED`;
+- fachliche Modellhochstufung: `NOT_EXECUTED`;
 - Änderung an GCPM, CURRENT oder Runtime: `NOT_EXECUTED`.
