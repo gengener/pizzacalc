@@ -1,9 +1,9 @@
 name: Pilot BMad compatibility
 
 on:
-  push:
+  pull_request:
     branches:
-      - pilot/bmad-karpathy-compatibility
+      - main
   workflow_dispatch:
 
 permissions:
