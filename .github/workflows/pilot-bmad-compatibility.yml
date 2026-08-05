@@ -40,13 +40,16 @@ jobs:
 
       - name: Probe supported BMad tools
         run: |
-          npx --yes bmad-method@6.10.0 install --list-tools \
+          npm exec --yes --package=bmad-method@6.10.0 -- \
+            bmad-method install --list-tools \
             | tee pilot-results/bmad-list-tools.txt
 
       - name: Install BMad headlessly for Codex
         run: |
-          npx --yes bmad-method@6.10.0 install \
+          npm exec --yes --package=bmad-method@6.10.0 -- \
+            bmad-method install \
             --yes \
+            --directory "$GITHUB_WORKSPACE" \
             --modules bmm \
             --tools codex \
             --set core.user_name=Gunnar \
@@ -54,6 +57,12 @@ jobs:
             --set core.document_output_language=German \
             --set core.output_folder='{project-root}/_bmad-output' \
             | tee pilot-results/bmad-install.txt
+
+      - name: Assert BMad installation exists
+        run: |
+          test -f _bmad/_config/manifest.yaml
+          test -d .agents/skills
+          test -s pilot-results/bmad-install.txt
 
       - name: Record generated tree and repository diff
         run: |
