@@ -1,0 +1,53 @@
+name: Pilot BMad compatibility
+
+on:
+  push:
+    branches:
+      - pilot/bmad-karpathy-compatibility
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out pilot branch
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install PizzaCalc dependencies
+        run: npm ci
+
+      - name: Verify unchanged PizzaCalc baseline
+        run: npm run check
+
+      - name: Record runtime versions
+        run: |
+          mkdir -p pilot-results
+          {
+            echo "node=$(node --version)"
+            echo "npm=$(npm --version)"
+            echo "head=$(git rev-parse HEAD)"
+          } | tee pilot-results/runtime.txt
+
+      - name: Probe supported BMad tools
+        run: |
+          npx --yes bmad-method@6.10.0 install --list-tools \
+            | tee pilot-results/bmad-list-tools.txt
+
+      - name: Upload probe evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bmad-compatibility-probe
+          path: pilot-results/
+          if-no-files-found: warn
+          retention-days: 7
